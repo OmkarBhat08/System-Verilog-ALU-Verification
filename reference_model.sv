@@ -224,42 +224,52 @@ class reference_model;
 												ref2scb_trans.res = ref_trans.opa ^ ref_trans.opb;
 											4'd5:	// XNOR
 												ref2scb_trans.res = ~(ref_trans.opa ^ ref_trans.opb);
-											4'd6:	// NOT_A
-												ref2scb_trans.res = ~(ref_trans.opa);
-											4'd7:	// NOT_B
-												ref2scb_trans.res = ~(ref_trans.opb);
-											4'd8:	// SHR1_A
-												ref2scb_trans.res = ref_trans.opa >> 1;
-											4'd9:	// SHL1_A
-												ref2scb_trans.res = ref_trans.opa << 1;
-											4'd10:	// SHR1_B
-												ref2scb_trans.res = ref_trans.opb >> 1;
-								4'd11:	// SHL1_B
+											4'd12:	// ROL_A_B
+											begin
+												SH_AMT = ref_trans.opb;
+												ref2scb_trans.res = 16'h00FF & ({1'b0,(ref_trans.opa << SH_AMT | ref_trans.opa >> (`WIDTH - SH_AMT))});
+												ref2scb_trans.err = |ref_trans.opb[`WIDTH - 1 : POW_2_N +1];
+											end
+											4'd13:	// ROR_A_B
+											begin
+												SH_AMT = ref_trans.opb;
+												ref2scb_trans.res = 16'h00FF & ({1'b0,ref_trans.opa << (`WIDTH- SH_AMT) | ref_trans.opa >> SH_AMT});
+												ref2scb_trans.err = |ref_trans.opb[`WIDTH - 1 : POW_2_N +1];
+											end
+										endcase
+									end
+								end
+							end
+							if((ref2scb_trans.cmd == 6) || (ref2scb_trans.cmd == 8) || (ref2scb_trans.cmd == 9))	// OPA operations
+							begin
+								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10)
+										ref2scb_trans.err = 1;
+								else
+								begin
+									if(ref2scb_trans.cmd == 6)		// NOT_A
+										ref2scb_trans.res = ~(ref_trans.opa);
+									else if(ref2scb_trans.cmd == 8)		// SHR1_A
+										ref2scb_trans.res = ref_trans.opa >> 1;
+									else		// SHL1_A
+										ref2scb_trans.res = ref_trans.opa << 1;
+								end
+							end
+
+							if((ref2scb_trans.cmd == 7) || (ref2scb_trans.cmd == 10) || (ref2scb_trans.cmd == 11))	// OPB  operations
+							begin
+								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01)
+										ref2scb_trans.err = 1;
+								else
+								begin
+									if(ref2scb_trans.cmd == 7)		// NOT_B
+										ref2scb_trans.res = ~(ref_trans.opb);
+									else if(ref2scb_trans.cmd == 10)		// SHR1_B
+										ref2scb_trans.res = ref_trans.opb >> 1;
+									else		// SHL1_B
 										ref2scb_trans.res = ref_trans.opb << 1;
-								4'd12:	// ROL_A_B
-									begin
-										SH_AMT = ref_trans.opb;
-										ref2scb_trans.res = 16'h00FF & ({1'b0,(ref_trans.opa << SH_AMT | ref_trans.opa >> (`WIDTH - SH_AMT))});
-										ref2scb_trans.err = |ref_trans.opb[`WIDTH - 1 : POW_2_N +1];
-									end
-								4'd13:	// ROR_A_B
-									begin
-										SH_AMT = ref_trans.opb;
-										ref2scb_trans.res = 16'h00FF & ({1'b0,ref_trans.opa << (`WIDTH- SH_AMT) | ref_trans.opa >> SH_AMT});
-										ref2scb_trans.err = |ref_trans.opb[`WIDTH - 1 : POW_2_N +1];
-									end
-								default:
-									begin
-										ref2scb_trans.res = {`WIDTH{1'bz}};
-										ref2scb_trans.oflow = 1'bz;
-										ref2scb_trans.cout = 1'bz;
-										ref2scb_trans.g = 1'bz;
-										ref2scb_trans.l = 1'bz;
-										ref2scb_trans.e = 1'bz;
-										ref2scb_trans.err = 1'bz;
-									end
-							endcase
-						end
+								end
+							end
+						end		// logical opeation ends
 					end
 					else
 					begin	// Latch on to previous values
