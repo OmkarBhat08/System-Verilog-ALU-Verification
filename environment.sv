@@ -1,4 +1,10 @@
 `include "defines.sv"
+`include "transaction.sv"
+`include "generator.sv"
+`include "driver.sv"
+`include "monitor.sv"
+`include "reference_model.sv"
+`include "scoreboard.sv"
 
 class environment;
 	virtual interfs driver_vif;
@@ -34,8 +40,8 @@ class environment;
 
 			gen = new(gen2drv_mbx);
 			drv = new(gen2drv_mbx, drv2ref_mbx, driver_vif);
-			mon = new(monitor_vif, mon2scb_mbx);
 			ref_model = new(drv2ref_mbx, ref2scb_mbx, reference_model_vif);
+			mon = new(monitor_vif, mon2scb_mbx);
 			scb = new(ref2scb_mbx,mon2scb_mbx);
 		end	
 	endtask
@@ -45,8 +51,8 @@ class environment;
 			gen.run();
 			drv.run();
 			mon.run();
-			scb.run();
 			ref_model.run();
+			scb.run();
 		join
 		scb.compare_report();
 	endtask

@@ -16,18 +16,23 @@ class scoreboard;
 
 	task run();
     for(int i=0;i<`trans_number;i++)
-      begin
-        ref2scb_trans = new();
-        mon2scb_trans = new();
-        //MBX -> reference model transaction
-        ref2scb_mbx.get(ref2scb_trans);
-        $display("In scoreboard @time = %0t from Reference: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.res,ref2scb_trans.err,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
-					
-				//MBX -> monitor transaction
-        mon2scb_mbx.get(mon2scb_trans);
-        $display("In scoreboard @time = %0t from Monitor: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,mon2scb_trans.res,mon2scb_trans.err,mon2scb_trans.oflow,mon2scb_trans.cout,mon2scb_trans.g,mon2scb_trans.l,mon2scb_trans.e);
+		begin
+			ref2scb_trans = new();
+			mon2scb_trans = new();
+		//	fork
+				begin
+        	//MBX -> reference model transaction
+        	ref2scb_mbx.get(ref2scb_trans);
+        	$display("In scoreboard @time = %0t from Reference: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.res,ref2scb_trans.err,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
+				end
+				begin		
+					//MBX -> monitor transaction
+        	mon2scb_mbx.get(mon2scb_trans);
+        	$display("In scoreboard @time = %0t from Monitor: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,mon2scb_trans.res,mon2scb_trans.err,mon2scb_trans.oflow,mon2scb_trans.cout,mon2scb_trans.g,mon2scb_trans.l,mon2scb_trans.e);
+      	end
       	compare_report();
-      end
+		//	join
+		end
   endtask
 
 	task compare_report();

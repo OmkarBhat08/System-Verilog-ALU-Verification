@@ -1,3 +1,4 @@
+`include "environment.sv"
 class test;
 	virtual interfs driver_vif;
 	virtual interfs monitor_vif;

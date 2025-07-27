@@ -1,6 +1,7 @@
 `include "defines.sv"
-
 class reference_model;
+	int i;
+	logic temp;
 	transaction ref_trans;
 	transaction ref2scb_trans;
 	localparam POW_2_N = $clog2(`WIDTH);
@@ -11,8 +12,8 @@ class reference_model;
 
 	virtual interfs.REF vif;
 
-	function new(mailbox #(transaction) ref2scb_mbx,
-							 mailbox #(transaction) drv2ref_mbx,
+	function new(mailbox #(transaction) drv2ref_mbx,
+							 mailbox #(transaction) ref2scb_mbx,
 							 virtual interfs.REF vif);
 		this.ref2scb_mbx = ref2scb_mbx;
 		this.drv2ref_mbx = drv2ref_mbx;
@@ -21,14 +22,14 @@ class reference_model;
 
 	task run();
 		transaction temp_trans;
-		logic temp;
+	 	temp_trans	= new();
+		repeat(3) @(vif.ref_model_cb);
 		for(int i=0; i< `trans_number;i=i+1)
 		begin
 			ref_trans = new();
 			ref2scb_trans = new();
+
 			drv2ref_mbx.get(ref_trans);
-				
-			repeat(1) @(vif.ref_model_cb)
 			begin
 				if(vif.ref_model_cb.rst)
 				begin
@@ -44,7 +45,7 @@ class reference_model;
 				begin
 					if(ref_trans.ce)
 					begin
-						if(ref2scb_trans.mode)		// Arithmetic operations
+						if(ref_trans.mode)		// Arithmetic operations
 						begin
 							ref2scb_trans.res = {`WIDTH{1'b0}};
 							ref2scb_trans.oflow = 1'b0;
@@ -53,7 +54,7 @@ class reference_model;
 							ref2scb_trans.l = 1'b0;
 							ref2scb_trans.e = 1'b0;
 							ref2scb_trans.err = 1'b0;
-							if((ref2scb_trans.cmd < 4) || (ref2scb_trans.cmd > 7 && ref2scb_trans.cmd <11))	// All 2 operand operations
+							if((ref_trans.cmd < 4) || (ref_trans.cmd > 7 && ref_trans.cmd <11))	// All 2 operand operations
 							begin
 								if(ref_trans.inp_valid == 2'b00)
 									ref2scb_trans.err = 1'b1;
@@ -62,8 +63,7 @@ class reference_model;
 									for(int i = 0; i < 16; i++ ) 
 									begin
 										repeat(1) @ (vif.ref_model_cb);
-											//ref2scb_trans.inp_valid = vif.driver_cb.inp_valid;
-										if(ref2scb_trans.inp_valid == 2'b11)
+										if(ref_trans.inp_valid == 2'b11)
 											break;
 									end	
 									if(i==15)
@@ -112,13 +112,13 @@ class reference_model;
 									end
 								end
 							end
-							if((ref2scb_trans.cmd == 4) || (ref2scb_trans.cmd == 5))	// OPA operations
+							if((ref_trans.cmd == 4) || (ref_trans.cmd == 5))	// OPA operations
 							begin
 								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10))
 										ref2scb_trans.err = 1;
 								else
 								begin
-									if(ref2scb_trans.cmd == 4)		// INC_A
+									if(ref_trans.cmd == 4)		// INC_A
 									begin
 										ref2scb_trans.res = ref_trans.opa + 1;
 										ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
@@ -133,13 +133,13 @@ class reference_model;
 								end
 							end
 
-							if((ref2scb_trans.cmd == 6) || (ref2scb_trans.cmd == 7))	// OPB operations
+							if((ref_trans.cmd == 6) || (ref_trans.cmd == 7))	// OPB operations
 							begin
 								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01))
 										ref2scb_trans.err = 1;
 								else
 								begin
-									if(ref2scb_trans.cmd == 6)		// INC_B
+									if(ref_trans.cmd == 6)		// INC_B
 									begin
 										ref2scb_trans.res = ref_trans.opb + 1;
 										ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
@@ -153,6 +153,10 @@ class reference_model;
 									end
 								end
 							end
+							repeat(1)@(vif.ref_model_cb);
+							$display("-----------------------Reference model @time = %0t------------------------------------------",$time);
+							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
+							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
@@ -164,7 +168,7 @@ class reference_model;
 							ref2scb_trans.l = 1'b0;
 							ref2scb_trans.e = 1'b0;
 							ref2scb_trans.err = 1'b0;
-							if((ref2scb_trans.cmd < 6) || (ref2scb_trans.cmd > 11 && ref2scb_trans.cmd < 14))	// All 2 operand operations
+							if((ref_trans.cmd < 6) || (ref_trans.cmd > 11 && ref_trans.cmd < 14))	// All 2 operand operations
 							begin
 								if(ref_trans.inp_valid == 2'b00)
 									ref2scb_trans.err = 1'b1;
@@ -173,8 +177,7 @@ class reference_model;
 									for(int i = 0; i < 16; i++ ) 
 									begin
 										repeat(1) @ (vif.ref_model_cb);
-										//ref2scb_trans.inp_valid = vif.driver_cb.inp_valid;
-										if(ref2scb_trans.inp_valid == 2'b11)
+										if(ref_trans.inp_valid == 2'b11)
 											break;
 									end	
 									if(i==15)
@@ -210,13 +213,13 @@ class reference_model;
 									end
 								end
 							end
-							if((ref2scb_trans.cmd == 6) || (ref2scb_trans.cmd == 8) || (ref2scb_trans.cmd == 9))	// OPA operations
+							if((ref_trans.cmd == 6) || (ref_trans.cmd == 8) || (ref_trans.cmd == 9))	// OPA operations
 							begin
 								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10))
 										ref2scb_trans.err = 1;
 								else
 								begin
-									if(ref2scb_trans.cmd == 6)		// NOT_A
+									if(ref_trans.cmd == 6)		// NOT_A
 										ref2scb_trans.res = ~(ref_trans.opa);
 									else if(ref2scb_trans.cmd == 8)		// SHR1_A
 										ref2scb_trans.res = ref_trans.opa >> 1;
@@ -225,24 +228,29 @@ class reference_model;
 								end
 							end
 
-							if((ref2scb_trans.cmd == 7) || (ref2scb_trans.cmd == 10) || (ref2scb_trans.cmd == 11))	// OPB  operations
+							if((ref_trans.cmd == 7) || (ref_trans.cmd == 10) || (ref_trans.cmd == 11))	// OPB  operations
 							begin
 								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01))
 										ref2scb_trans.err = 1;
 								else
 								begin
-									if(ref2scb_trans.cmd == 7)		// NOT_B
+									if(ref_trans.cmd == 7)		// NOT_B
 										ref2scb_trans.res = ~(ref_trans.opb);
-									else if(ref2scb_trans.cmd == 10)		// SHR1_B
+									else if(ref_trans.cmd == 10)		// SHR1_B
 										ref2scb_trans.res = ref_trans.opb >> 1;
 									else		// SHL1_B
 										ref2scb_trans.res = ref_trans.opb << 1;
 								end
 							end
+							repeat(1)@(vif.ref_model_cb);
+							$display("-----------------------Reference model @time = %0t------------------------------------------",$time);
+							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
+							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 						end		// logical opeation ends
 					end
 					else
 					begin	// Latch on to previous values
+						$display("In CE=0");
 						ref2scb_trans.res = temp_trans.res;
 						ref2scb_trans.oflow = temp_trans.oflow;
 						ref2scb_trans.cout = temp_trans.cout;

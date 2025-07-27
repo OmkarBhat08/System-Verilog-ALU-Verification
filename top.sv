@@ -1,5 +1,5 @@
-`include "pkg.sv"
-/*
+/*`include "pkg.sv"
+//`include "interfs.sv"
 	`include "transaction.sv"
 	`include "generator.sv"
 	`include "driver.sv"
@@ -7,12 +7,12 @@
 	`include "reference_model.sv"
 	`include "scoreboard.sv"
 	`include "environment.sv"
-	`include "test.sv"
 */
+`include "test.sv"
 `include "interfs.sv"
-`include "alu.v"
+`include "alu_design.v"
 module top();
-	import pkg ::*;
+//	import pkg ::*;
 	bit clk, rst;
 	
 	initial
@@ -31,7 +31,7 @@ module top();
 
 	interfs intf(clk,rst);
 
-	alu DUT (
+	alu_design DUT (
 		.CLK(clk),
 		.RST(rst),
 		.INP_VALID(intf.inp_valid),

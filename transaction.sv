@@ -12,7 +12,8 @@ class transaction;
 	bit [`WIDTH:0] res;
 	constraint solve_mode_before_cmd {solve mode before cmd;}
 	constraint mode_rand {mode inside {0,1};}
-	constraint inp_valid_rand {inp_valid inside {[0:3]};}
+	constraint inp_valid_rand {inp_valid == 2;}		//Remove this
+	//constraint inp_valid_rand {inp_valid inside {[0:3]};}
 	constraint cmd_in_range {if(mode)
 															cmd < 11;
 													 else
@@ -31,6 +32,10 @@ class transaction;
 		copy.opa = this.opa;
 		copy.opb = this.opb;
 		return copy;
+	endfunction
+	
+	function void disp();
+		$display("time=%0t | ce=%b | mode=%0d | cmd=%0d | inp_valid=%b | opa=%0d | opb=%0d | cin=%b | res=%0d | err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b ",$time,ce,mode,cmd,inp_valid,opa,opb,cin,res,err,oflow,cout,g,l,e);	
 	endfunction
 endclass
 /*

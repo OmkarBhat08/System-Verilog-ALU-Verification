@@ -32,6 +32,7 @@ module alu #(parameter DW = 8, CW = 4)(INP_VALID,OPA,OPB,CIN,CLK,RST,CMD,CE,MODE
 				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
       end
       else if (INP_VALID==2'b01)  begin    
+				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
         oprd1<=OPA;
         CMD_tmp<=CMD;
         oprd1_valid<=1;
@@ -40,7 +41,6 @@ module alu #(parameter DW = 8, CW = 4)(INP_VALID,OPA,OPB,CIN,CLK,RST,CMD,CE,MODE
         if(oprd2_valid && wait_counter >= 16) begin
           ERR <= 1'b1;
         end
-				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
       end
       else if (INP_VALID==2'b10)  begin    
         oprd2<=OPB;
@@ -51,7 +51,6 @@ module alu #(parameter DW = 8, CW = 4)(INP_VALID,OPA,OPB,CIN,CLK,RST,CMD,CE,MODE
         if(oprd1_valid && wait_counter >= 16) begin
           ERR <= 1'b1;
         end
-				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
       end
       else if (INP_VALID==2'b11)  begin    
         oprd1<=OPA;
@@ -60,7 +59,6 @@ module alu #(parameter DW = 8, CW = 4)(INP_VALID,OPA,OPB,CIN,CLK,RST,CMD,CE,MODE
         oprd1_valid<=1;
         oprd2_valid<=1;
         wait_counter<=0;
-				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
       end
       else begin    
         // Increment wait counter if only one operand is valid
@@ -71,7 +69,6 @@ module alu #(parameter DW = 8, CW = 4)(INP_VALID,OPA,OPB,CIN,CLK,RST,CMD,CE,MODE
             // Keep operands but stop incrementing counter after 16 cycles
             wait_counter <= 16;
           end
-				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
         end
       end
     end
