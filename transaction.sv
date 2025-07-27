@@ -33,7 +33,7 @@ class transaction;
 		return copy;
 	endfunction
 endclass
-
+/*
 class transaction1 extends transaction;	// Addition
 
 	constraint mode_rand {mode == 0;}
@@ -53,3 +53,4 @@ class transaction1 extends transaction;	// Addition
 		return copy;
 	endfunction
 endclass
+*/

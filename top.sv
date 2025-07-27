@@ -1,17 +1,27 @@
 `include "pkg.sv"
+/*
+	`include "transaction.sv"
+	`include "generator.sv"
+	`include "driver.sv"
+	`include "monitor.sv"
+	`include "reference_model.sv"
+	`include "scoreboard.sv"
+	`include "environment.sv"
+	`include "test.sv"
+*/
 `include "interfs.sv"
 `include "alu.v"
 module top();
 	import pkg ::*;
 	bit clk, rst;
-
-	always
-		#5 clk = ~clk;
 	
 	initial
 	begin
-		clk = 1'b0;
+		forever #10 clk =~clk;
+	end
 
+	initial
+	begin
 		@(posedge clk);
 			rst = 1'b1;
 		
@@ -45,6 +55,6 @@ module top();
 	initial
 	begin
 		tb.run();
-		$finish;
+		$finish();
 	end
 endmodule

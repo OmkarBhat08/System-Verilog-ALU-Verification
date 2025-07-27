@@ -15,7 +15,8 @@ interface interfs(input bit clk,rst);
 	clocking driver_cb @(posedge clk);
 		default input #0 output #0;
 		input rst;
-		output inp_valid, mode, cmd, opa, opb, cin;
+		//Output
+		inout inp_valid, mode, cmd, opa, opb, cin;
 	endclocking
 
 	clocking monitor_cb @(posedge clk);

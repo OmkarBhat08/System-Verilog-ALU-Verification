@@ -2,7 +2,8 @@
 
 class scoreboard;
 	int match, mismatch;
-	transaction ref2scb_trans, mon2scb_trans;
+	transaction ref2scb_trans;
+	transaction mon2scb_trans;
 
 	mailbox #(transaction) ref2scb_mbx;
 	mailbox #(transaction) mon2scb_mbx;
@@ -30,23 +31,23 @@ class scoreboard;
   endtask
 
 	task compare_report();
-     if(ref2scb_trans == mon2scb_trans)
-     begin
-			 $display("------------------------------------Report------------------------------------");
-       $display("@time = %0t from Reference: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.res,ref2scb_trans.err,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
-       $display("@time = %0t from Monitor: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,mon2scb_trans.res,mon2scb_trans.err,mon2scb_trans.oflow,mon2scb_trans.cout,mon2scb_trans.g,mon2scb_trans.l,mon2scb_trans.e);
-			 match++;
-			 $display("Test passed = %d",match);
-			 $display("------------------------------------------------------------------------------");
-		 end
-     else
-     begin
-			 $display("------------------------------------Report------------------------------------");
-       $display("@time = %0t from Reference: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.res,ref2scb_trans.err,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
-       $display("@time = %0t from Monitor: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,mon2scb_trans.res,mon2scb_trans.err,mon2scb_trans.oflow,mon2scb_trans.cout,mon2scb_trans.g,mon2scb_trans.l,mon2scb_trans.e);
-			 mismatch++;
-			 $display("Test failed = %d",mismatch);
-			 $display("------------------------------------------------------------------------------");
-		 end
-	 endtask
+		if(ref2scb_trans == mon2scb_trans)
+    begin
+			$display("------------------------------------Report------------------------------------");
+      $display("@time = %0t from Reference: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.res,ref2scb_trans.err,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
+      $display("@time = %0t from Monitor: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,mon2scb_trans.res,mon2scb_trans.err,mon2scb_trans.oflow,mon2scb_trans.cout,mon2scb_trans.g,mon2scb_trans.l,mon2scb_trans.e);
+		 match++;
+		 $display("Test passed = %d",match);
+		 $display("------------------------------------------------------------------------------");
+		end
+    else
+    begin
+			$display("------------------------------------Report------------------------------------");
+      $display("@time = %0t from Reference: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.res,ref2scb_trans.err,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
+      $display("@time = %0t from Monitor: \n res=%0d |err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,mon2scb_trans.res,mon2scb_trans.err,mon2scb_trans.oflow,mon2scb_trans.cout,mon2scb_trans.g,mon2scb_trans.l,mon2scb_trans.e);
+			mismatch++;
+			$display("Test failed = %d",mismatch);
+			$display("------------------------------------------------------------------------------");
+		end
+	endtask
 endclass

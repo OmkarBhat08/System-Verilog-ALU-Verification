@@ -1,7 +1,7 @@
 # vsim -c top 
-# Start time: 18:05:32 on Jul 27,2025
+# Start time: 19:59:40 on Jul 27,2025
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: top.sv(24): (vopt-2241) Connection width does not match width of port 'RES'. The port definition is at: alu.v(1).
+# ** Warning: top.sv(34): (vopt-2241) Connection width does not match width of port 'RES'. The port definition is at: alu.v(1).
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
 # //
@@ -20,23 +20,18 @@
 # Loading work.interfs(fast)
 # Loading work.pkg(fast)
 # Loading work.top(fast)
-# ** Warning: (vsim-8441) driver.sv(38): Clocking block output vif.driver_cb.cin is not legal in this
-# or another expression.
-#    Time: 0 ns  Iteration: 0  Region: /pkg File: pkg.sv
-# ** Warning: (vsim-8441) driver.sv(35): Clocking block output vif.driver_cb.cmd is not legal in this
-# or another expression.
-#    Time: 0 ns  Iteration: 0  Region: /pkg File: pkg.sv
-# ** Warning: (vsim-8441) driver.sv(33): Clocking block output vif.driver_cb.inp_valid is not legal in this
-# or another expression.
-#    Time: 0 ns  Iteration: 0  Region: /pkg File: pkg.sv
-# ** Warning: (vsim-8441) driver.sv(34): Clocking block output vif.driver_cb.mode is not legal in this
-# or another expression.
-#    Time: 0 ns  Iteration: 0  Region: /pkg File: pkg.sv
-# ** Warning: (vsim-8441) driver.sv(36): Clocking block output vif.driver_cb.opa is not legal in this
-# or another expression.
-#    Time: 0 ns  Iteration: 0  Region: /pkg File: pkg.sv
-# ** Warning: (vsim-8441) driver.sv(37): Clocking block output vif.driver_cb.opb is not legal in this
-# or another expression.
-#    Time: 0 ns  Iteration: 0  Region: /pkg File: pkg.sv
-# End time: 18:05:37 on Jul 27,2025, Elapsed time: 0:00:05
-# Errors: 0, Warnings: 7
+# @time = 0 Randomized: inp_valid = 0 | mode = 1 | cmd = 6 | ce = 1 | opa =11 | opb = 20 | cin= 1
+# @time = 0 Randomized: inp_valid = 0 | mode = 0 | cmd = 3 | ce = 1 | opa =104 | opb = 117 | cin= 1
+# time = 30 In design: MODE=x | CMD=xxxx | OPA=x | OPB=x | CIN=x
+# --------------------------------Driver @ time = 90 -----------------------------------------------
+# inp_valid = 0 | mode = 1 | cmd = 6 | opa = 11 | opb = 20 | cin = 1
+# --------------------------------Monitor @time = 90----------------------------------------------------
+#  res= z | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# --------------------------------Driver @ time = 130 -----------------------------------------------
+# inp_valid = 0 | mode = 0 | cmd = 3 | opa = 104 | opb = 117 | cin = 1
+# --------------------------------Monitor @time = 130----------------------------------------------------
+#  res= z | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# Break key hit
+# Break at an unknown location
+# End time: 19:59:47 on Jul 27,2025, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 1
