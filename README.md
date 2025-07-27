@@ -1,6 +1,6 @@
 Verification Documentation
 ----
-[ALU Verification Documentation.docx](https://docs.google.com/document/d/1kvIUrNUue7swQaCpwf85-r68EgH3PN-h/edit?usp=sharing&ouid=115679411967049075293&rtpof=true&sd=true)
+[ALU Verification Documentation](https://drive.google.com/file/d/1-olRUnOU_X-ateG1zKVS7u-5tWffnxup/view?usp=drive_link)
 
 ALU Test Plan
 ----
