@@ -1,5 +1,4 @@
 `include "defines.sv"
-`include "transaction.sv"
 
 class reference_model;
 	transaction ref_trans;

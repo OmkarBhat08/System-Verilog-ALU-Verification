@@ -1,4 +1,6 @@
 `include "pkg.sv"
+`include "interfs.sv"
+`include "alu.v"
 module top();
 	inport pkg ::*;
 	bit clk, rst;

@@ -4,7 +4,7 @@ package pkg;
 	`include "driver.sv"
 	`include "monitor.sv"
 	`include "reference_model.sv"
-	`include "cscoreboard.sv"
+	`include "scoreboard.sv"
 	`include "environment.sv"
 	`include "test.sv"
 endpackage
