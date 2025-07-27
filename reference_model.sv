@@ -18,35 +18,6 @@ class reference_model;
 		this.drv2ref_mbx = drv2ref_mbx;
 		this.vif = vif;
 	endfunction
-	
-	function bit counter_for_b();
-		int i = 0;
-		for(i=0;i<16;i++)
-		begin
-			if (ref_trans.inp_valid == 2'b10)
-				break;
-			repeat(1) @(vif.ref_model_cb);
-		end
-		if(i == 15)
-			counter_for_b = 1;
-		else
-			counter_for_b = 1'bz;
-	endfunction
-
-	function bit counter_for_a();
-		int i = 0;
-		for(i=0;i<16;i++)
-		begin
-			if (ref_trans.inp_valid == 2'b01)
-				break;
-			else
-				repeat(1) @(vif.ref_model_cb);
-		end
-		if(i == 15)
-			counter_for_a = 1;
-		else
-			counter_for_a = 1'bz;
-	endfunction
 
 	task run();
 		transaction temp_trans;
@@ -59,7 +30,7 @@ class reference_model;
 				
 			repeat(1) @(vif.ref_model_cb)
 			begin
-				if(ref_trans.rst)
+				if(vif.ref_model_cb.rst)
 				begin
 					ref2scb_trans.res = {`WIDTH{1'bz}};
 					ref2scb_trans.oflow = 1'bz;
@@ -90,8 +61,8 @@ class reference_model;
 								begin
 									for(int i = 0; i < 16; i++ ) 
 									begin
-										repeat(1) @ (vif.ref_cb);
-										ref2scb_trans.inp_valid = vif.drv_cb.inp_valid;
+										repeat(1) @ (vif.ref_model_cb);
+											//ref2scb_trans.inp_valid = vif.driver_cb.inp_valid;
 										if(ref2scb_trans.inp_valid == 2'b11)
 											break;
 									end	
@@ -143,7 +114,7 @@ class reference_model;
 							end
 							if((ref2scb_trans.cmd == 4) || (ref2scb_trans.cmd == 5))	// OPA operations
 							begin
-								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10)
+								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10))
 										ref2scb_trans.err = 1;
 								else
 								begin
@@ -164,7 +135,7 @@ class reference_model;
 
 							if((ref2scb_trans.cmd == 6) || (ref2scb_trans.cmd == 7))	// OPB operations
 							begin
-								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01)
+								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01))
 										ref2scb_trans.err = 1;
 								else
 								begin
@@ -201,8 +172,8 @@ class reference_model;
 								begin
 									for(int i = 0; i < 16; i++ ) 
 									begin
-										repeat(1) @ (vif.ref_cb);
-										ref2scb_trans.inp_valid = vif.drv_cb.inp_valid;
+										repeat(1) @ (vif.ref_model_cb);
+										//ref2scb_trans.inp_valid = vif.driver_cb.inp_valid;
 										if(ref2scb_trans.inp_valid == 2'b11)
 											break;
 									end	
@@ -241,7 +212,7 @@ class reference_model;
 							end
 							if((ref2scb_trans.cmd == 6) || (ref2scb_trans.cmd == 8) || (ref2scb_trans.cmd == 9))	// OPA operations
 							begin
-								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10)
+								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b10))
 										ref2scb_trans.err = 1;
 								else
 								begin
@@ -256,7 +227,7 @@ class reference_model;
 
 							if((ref2scb_trans.cmd == 7) || (ref2scb_trans.cmd == 10) || (ref2scb_trans.cmd == 11))	// OPB  operations
 							begin
-								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01)
+								if((ref_trans.inp_valid == 2'b00) || (ref_trans.inp_valid == 2'b01))
 										ref2scb_trans.err = 1;
 								else
 								begin

@@ -18,7 +18,7 @@ class environment;
 
 	function new(virtual interfs driver_vif,
 							 virtual interfs monitor_vif,
-							 virtual interfs reference_model_vif,
+							 virtual interfs reference_model_vif
 							);
 		this.driver_vif = driver_vif;
 		this.monitor_vif = monitor_vif;

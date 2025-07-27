@@ -2,7 +2,7 @@
 `include "interfs.sv"
 `include "alu.v"
 module top();
-	inport pkg ::*;
+	import pkg ::*;
 	bit clk, rst;
 
 	always
@@ -24,7 +24,7 @@ module top();
 	alu DUT (
 		.CLK(clk),
 		.RST(rst),
-		.INP_VALID(intf.input_valid),
+		.INP_VALID(intf.inp_valid),
 		.MODE(intf.mode),
 		.CMD(intf.cmd),
 		.CE(intf.ce),
