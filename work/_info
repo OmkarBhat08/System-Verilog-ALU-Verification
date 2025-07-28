@@ -9,64 +9,65 @@ z2
 cModel Technology
 Z0 d/fetools/work_area/frontend/Batch_10/omkar/test_bench/System-Verilog-ALU-Verification
 T_opt
-!s110 1753644425
-VY7MkY5`QheJckfX0`3W;S3
+!s110 1753709034
+V_j<NIIE>2P<H?AhFe[iY73
 04 3 4 work top fast 0
-=1-6805caf5892c-68867d89-bc4ec-a147
+=1-6805caf5892c-688779ea-a50c-1ccb6
 o-quiet -auto_acc_if_foreign -work work
 Z1 tCvgOpt 0
 n@_opt
 OE;O;10.6c;65
+R0
 valu
 Z2 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-!s110 1753642802
+Z3 DXx4 work 11 top_sv_unit 0 22 ;Mllz73M0ePYc;1b=DiVV3
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
 !i10b 1
 !s100 OmRc`OQ<I>2f1obblnZOm1
 IO98H0V:eS4z4An7ITT?Qk1
-Z3 VDg1SIo80bB@j0V0VzS_@n1
-Z4 !s105 top_sv_unit
+Z5 !s105 top_sv_unit
 S1
 R0
 w1753642483
 8alu.v
-Falu.v
+Z6 Falu.v
 L0 1
-Z5 OE;L;10.6c;65
-r1
-!s85 0
-31
-!s108 1753642802.000000
+Z7 OE;L;10.6c;65
+Z8 !s108 1753713207.000000
 !s107 alu.v|interfs.sv|scoreboard.sv|reference_model.sv|monitor.sv|driver.sv|generator.sv|transaction.sv|defines.sv|environment.sv|test.sv|top.sv|
-Z6 !s90 top.sv|
+Z9 !s90 top.sv|
 !i113 0
-Z7 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z10 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R1
 valu_design
 R2
-Z8 DXx4 work 11 top_sv_unit 0 22 ?H:9_jJHQ@ULESPMa=RhX3
-R3
+DXx4 work 11 top_sv_unit 0 22 FI7K3l9KRKCcYFk8CYJf[2
+R4
 r1
 !s85 0
 31
 !i10b 1
 !s100 C>hY4Bh4`0@<NaJTEU9o13
 In0S^k_lhd8nE9gITIkbzD0
-R4
+R5
 S1
 R0
 w1753643088
 8alu_design.v
-Z9 Falu_design.v
+Falu_design.v
 L0 1
-R5
-Z10 !s108 1753644422.000000
-Z11 !s107 alu_design.v|interfs.sv|scoreboard.sv|reference_model.sv|monitor.sv|driver.sv|generator.sv|transaction.sv|defines.sv|environment.sv|test.sv|top.sv|
-R6
-!i113 0
 R7
+!s108 1753708119.000000
+!s107 alu_design.v|interfs.sv|scoreboard.sv|reference_model.sv|monitor.sv|driver.sv|generator.sv|transaction.sv|defines.sv|environment.sv|test.sv|top.sv|
+R9
+!i113 0
+R10
 R1
 Xdriver_sv_unit
-Z12 !s115 interfs
+Z11 !s115 interfs
 R2
 !s110 1753630439
 !i10b 1
@@ -78,11 +79,11 @@ S1
 R0
 w1753630430
 8driver.sv
-Z13 Fdriver.sv
-Z14 Fdefines.sv
-Z15 Ftransaction.sv
+Z12 Fdriver.sv
+Z13 Fdefines.sv
+Z14 Ftransaction.sv
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -90,10 +91,10 @@ r1
 !s107 transaction.sv|defines.sv|driver.sv|
 !s90 driver.sv|
 !i113 0
-R7
+R10
 R1
 Xenvironment_sv_unit
-R12
+R11
 R2
 !s110 1753632385
 !i10b 1
@@ -105,16 +106,16 @@ S1
 R0
 w1753632383
 8environment.sv
-Z16 Fenvironment.sv
-R14
-R15
-Z17 Fgenerator.sv
+Z15 Fenvironment.sv
 R13
-Z18 Fmonitor.sv
-Z19 Freference_model.sv
-Z20 Fscoreboard.sv
+R14
+Z16 Fgenerator.sv
+R12
+Z17 Fmonitor.sv
+Z18 Freference_model.sv
+Z19 Fscoreboard.sv
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -122,7 +123,7 @@ r1
 !s107 scoreboard.sv|reference_model.sv|monitor.sv|driver.sv|generator.sv|transaction.sv|defines.sv|environment.sv|
 !s90 environment.sv|
 !i113 0
-R7
+R10
 R1
 Xgenerator_sv_unit
 R2
@@ -136,11 +137,11 @@ S1
 R0
 w1753630375
 8generator.sv
-R17
+R16
+R13
 R14
-R15
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -148,34 +149,34 @@ r1
 !s107 transaction.sv|defines.sv|generator.sv|
 !s90 generator.sv|
 !i113 0
-R7
+R10
 R1
 Yinterfs
 R2
-R8
 R3
+R4
 r1
 !s85 0
 31
 !i10b 1
 !s100 ?3lk`ilFb^FJnlM_P0LJ_2
 INn_KDYIOT36;oS;<L_lF92
-R4
+R5
 S1
 R0
 w1753634534
 8interfs.sv
-Z21 Finterfs.sv
+Z20 Finterfs.sv
 L0 3
-R5
-R10
-R11
-R6
-!i113 0
 R7
+R8
+Z21 !s107 alu.v|interfs.sv|scoreboard.sv|reference_model.sv|monitor.sv|driver.sv|generator.sv|transaction.sv|defines.sv|environment.sv|test.sv|top.sv|
+R9
+!i113 0
+R10
 R1
 Xmonitor_sv_unit
-R12
+R11
 R2
 !s110 1753630460
 !i10b 1
@@ -187,11 +188,11 @@ S1
 R0
 w1753630457
 8monitor.sv
-R18
+R17
+R13
 R14
-R15
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -199,10 +200,10 @@ r1
 !s107 transaction.sv|defines.sv|monitor.sv|
 !s90 monitor.sv|
 !i113 0
-R7
+R10
 R1
 Xreference_model_sv_unit
-R12
+R11
 R2
 !s110 1753632157
 !i10b 1
@@ -214,11 +215,11 @@ S1
 R0
 w1753632155
 8reference_model.sv
-R19
+R18
+R13
 R14
-R15
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -226,7 +227,7 @@ r1
 !s107 transaction.sv|defines.sv|reference_model.sv|
 !s90 reference_model.sv|
 !i113 0
-R7
+R10
 R1
 Xscoreboard_sv_unit
 R2
@@ -240,11 +241,11 @@ S1
 R0
 w1753630478
 8scoreboard.sv
-R20
+R19
+R13
 R14
-R15
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -252,10 +253,10 @@ r1
 !s107 transaction.sv|defines.sv|scoreboard.sv|
 !s90 scoreboard.sv|
 !i113 0
-R7
+R10
 R1
 Xtest_sv_unit
-R12
+R11
 R2
 !s110 1753632438
 !i10b 1
@@ -268,16 +269,16 @@ R0
 w1753632429
 8test.sv
 Z22 Ftest.sv
-R16
-R14
 R15
-R17
 R13
+R14
+R16
+R12
+R17
 R18
 R19
-R20
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -285,66 +286,66 @@ r1
 !s107 scoreboard.sv|reference_model.sv|monitor.sv|driver.sv|generator.sv|transaction.sv|defines.sv|environment.sv|test.sv|
 !s90 test.sv|
 !i113 0
-R7
+R10
 R1
 vtop
 R2
-R8
 R3
+R4
 r1
 !s85 0
 31
 !i10b 1
-!s100 ;2WA0_>0_``QNBLfCmkk91
-I811VeJUOTRQ=L>8]DF?:P0
-R4
+!s100 RmZQX^HPfU9KdghYWFe423
+I`EBBT784gfjgSTOFX?fj^0
+R5
 S1
 R0
-w1753643051
+w1753708434
 Z23 8top.sv
 Z24 Ftop.sv
-L0 14
-R5
-R10
-R11
-R6
-!i113 0
+L0 4
 R7
+R8
+R21
+R9
+!i113 0
+R10
 R1
 Xtop_sv_unit
-R12
+R11
 R2
-V?H:9_jJHQ@ULESPMa=RhX3
+V;Mllz73M0ePYc;1b=DiVV3
 r1
 !s85 0
 31
 !i10b 1
-!s100 cLlHkOgFj1jcfz;TUo67<3
-I?H:9_jJHQ@ULESPMa=RhX3
+!s100 GZ[=996>80Gb`k^kidJgF1
+I;Mllz73M0ePYc;1b=DiVV3
 !i103 1
 S1
 R0
-w1753644421
+w1753709025
 R23
 R24
 R22
-R16
-R14
 R15
-R17
 R13
+R14
+R16
+R12
+R17
 R18
 R19
 R20
+R6
+L0 2
+R7
+R8
 R21
 R9
-L0 2
-R5
-R10
-R11
-R6
 !i113 0
-R7
+R10
 R1
 Xtransaction_sv_unit
 R2
@@ -358,10 +359,10 @@ S1
 R0
 w1753624642
 8transaction.sv
-R15
 R14
+R13
 L0 2
-R5
+R7
 r1
 !s85 0
 31
@@ -369,5 +370,5 @@ r1
 !s107 defines.sv|transaction.sv|
 !s90 transaction.sv|
 !i113 0
-R7
+R10
 R1

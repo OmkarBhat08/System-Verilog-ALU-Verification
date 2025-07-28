@@ -21,7 +21,7 @@ class driver;
 	endfunction
 
 	task run();
-		//repeat(1) @(vif.driver_cb);
+		repeat(2) @(vif.driver_cb);
 		for(i=0;i<`trans_number;i++)
 		begin
 			drv_trans = new();
@@ -39,7 +39,7 @@ class driver;
 					vif.driver_cb.cin <= drv_trans.cin;	
 					vif.driver_cb.ce <= drv_trans.ce;	
 					repeat(1) @(vif.driver_cb);
-					$display("--------------------------------Driver during reset @ time = %0t---------------------------------\ninp_valid = %0d | mode = %0d | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
+					$display("--------------------------------Driver during reset @ time = %0t---------------------------------\ninp_valid = %b | mode = %b | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
 				end
 			end
 			else
@@ -54,11 +54,12 @@ class driver;
 					vif.driver_cb.cin <= drv_trans.cin;	
 					vif.driver_cb.ce <= drv_trans.ce;	
 					repeat(1) @(vif.driver_cb);
-					$display("--------------------------------Driver @ time = %0t -----------------------------------------------\nce= %0d | inp_valid = %0d | mode = %0d | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.ce,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
+					$display("----------------------------------------------------Driver @ time = %0t----------------------------------------------------\nce= %0d | inp_valid = %b | mode = %0d | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.ce,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
 
 					drv2ref_mbx.put(drv_trans);
 					//Sample the covergroup  drv_cg.sample();
 					//$display("Input Functional Coverage = %0d", drv_cg.get_coverage());
+				repeat(1) @(vif.driver_cb);
 				end
 			end
 		end

@@ -22,4 +22,24 @@ class test;
 	endtask
 endclass
 
-//Regression testing cases
+// Regression testing cases
+class test1 extends test;
+	transaction1 trans;
+
+	function new(virtual interfs driver_vif,
+							 virtual interfs monitor_vif,
+							 virtual interfs reference_model_vif
+							);
+		super.new(driver_vif,monitor_vif,reference_model_vif);
+	endfunction
+	
+	task run();
+		env = new(driver_vif,monitor_vif,reference_model_vif);
+		env.build_components;
+		begin
+			trans = new();
+			env.gen.blueprint = trans;
+		end
+		env.run_all;
+	endtask
+endclass

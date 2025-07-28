@@ -54,6 +54,5 @@ class environment;
 			ref_model.run();
 			scb.run();
 		join
-		scb.compare_report();
 	endtask
 endclass

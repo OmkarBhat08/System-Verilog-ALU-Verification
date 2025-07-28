@@ -1,18 +1,7 @@
-/*`include "pkg.sv"
-//`include "interfs.sv"
-	`include "transaction.sv"
-	`include "generator.sv"
-	`include "driver.sv"
-	`include "monitor.sv"
-	`include "reference_model.sv"
-	`include "scoreboard.sv"
-	`include "environment.sv"
-*/
 `include "test.sv"
 `include "interfs.sv"
-`include "alu_design.v"
+`include "alu.v"
 module top();
-//	import pkg ::*;
 	bit clk, rst;
 	
 	initial
@@ -31,7 +20,7 @@ module top();
 
 	interfs intf(clk,rst);
 
-	alu_design DUT (
+	alu DUT (
 		.CLK(clk),
 		.RST(rst),
 		.INP_VALID(intf.inp_valid),
@@ -51,10 +40,12 @@ module top();
 	);
 
 	test tb = new(intf.DRV, intf.MON, intf.REF);
+	test1 tb1 = new(intf.DRV, intf.MON, intf.REF);
 	
 	initial
 	begin
-		tb.run();
+		//tb.run();
+		tb1.run();
 		$finish();
 	end
 endmodule

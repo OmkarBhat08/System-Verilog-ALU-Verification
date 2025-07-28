@@ -23,7 +23,7 @@ class reference_model;
 	task run();
 		transaction temp_trans;
 	 	temp_trans	= new();
-		repeat(3) @(vif.ref_model_cb);
+		//repeat(3) @(vif.ref_model_cb);
 		for(int i=0; i< `trans_number;i=i+1)
 		begin
 			ref_trans = new();
@@ -58,7 +58,45 @@ class reference_model;
 							begin
 								if(ref_trans.inp_valid == 2'b00)
 									ref2scb_trans.err = 1'b1;
-								else if(ref_trans.inp_valid != 2'b11) 
+								else if(ref_trans.inp_valid == 2'b11)
+								begin
+										case(ref_trans.cmd)
+											4'd0:	//ADD
+											begin
+												ref2scb_trans.res = ref_trans.opa + ref_trans.opb;
+												ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
+											end
+											4'd1:	//SUB
+											begin
+												ref2scb_trans.res = ref_trans.opa - ref_trans.opb;
+												ref2scb_trans.oflow = (ref_trans.opa < ref_trans.opb);
+											end
+											4'd2:	//ADD_CIN
+											begin
+												ref2scb_trans.res = ref_trans.opa + ref_trans.opb + ref_trans.cin;
+												ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
+											end
+											4'd3:	// SUB_CIN
+											begin
+												ref2scb_trans.res = (ref_trans.opa - ref_trans.opb) - ref_trans.cin;
+												ref2scb_trans.oflow = ((ref_trans.opa < ref_trans.opb) || ((ref_trans.opa == ref_trans.opa) && (ref_trans.cin != 0)));
+											end
+											4'd8:	// CMP
+											begin
+												if(ref_trans.opa == ref_trans.opb)
+                	    		{ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e} = 3'bzz1;
+                  			else if (ref_trans.opa > ref_trans.opb)
+                    			{ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e} = 3'b1zz;
+                    		else
+        	            		{ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e} = 3'bz1z;
+											end	
+											4'd9:	//Increment and multiply
+												ref2scb_trans.res = (ref_trans.opa + 1) * (ref_trans.opb+1);
+											4'd10:	//Shift and multiply
+												ref2scb_trans.res = (ref_trans.opa << 1) * ref_trans.opb;
+										endcase
+								end
+								else 
 								begin
 									for(int i = 0; i < 16; i++ ) 
 									begin
@@ -75,25 +113,21 @@ class reference_model;
 											begin
 												ref2scb_trans.res = ref_trans.opa + ref_trans.opb;
 												ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
-												ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
 											end
 											4'd1:	//SUB
 											begin
 												ref2scb_trans.res = ref_trans.opa - ref_trans.opb;
-												ref2scb_trans.cout = (ref_trans.opa < ref_trans.opb);
-												ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
+												ref2scb_trans.oflow = (ref_trans.opa < ref_trans.opb);
 											end
 											4'd2:	//ADD_CIN
 											begin
 												ref2scb_trans.res = ref_trans.opa + ref_trans.opb + ref_trans.cin;
 												ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
-												ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
 											end
 											4'd3:	// SUB_CIN
 											begin
 												ref2scb_trans.res = (ref_trans.opa - ref_trans.opb) - ref_trans.cin;
 												ref2scb_trans.oflow = ((ref_trans.opa < ref_trans.opb) || ((ref_trans.opa == ref_trans.opa) && (ref_trans.cin != 0)));
-												ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
 											end
 											4'd8:	// CMP
 											begin
@@ -122,13 +156,11 @@ class reference_model;
 									begin
 										ref2scb_trans.res = ref_trans.opa + 1;
 										ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
-										ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
 									end
 									else		// DEC_A
 									begin
 										ref2scb_trans.res = ref_trans.opa - 1;
-										ref2scb_trans.cout = ref_trans.opb==0;
-										ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
+										ref2scb_trans.oflow = ref_trans.opb==0;
 									end
 								end
 							end
@@ -143,18 +175,16 @@ class reference_model;
 									begin
 										ref2scb_trans.res = ref_trans.opb + 1;
 										ref2scb_trans.cout = ref2scb_trans.res[`WIDTH];
-										ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
 									end
 									else		// DEC_B
 									begin
 										ref2scb_trans.res = ref_trans.opb - 1;
-										ref2scb_trans.cout = ref_trans.opb==0;
-										ref2scb_trans.oflow = ref2scb_trans.res[`WIDTH];
+										ref2scb_trans.oflow = ref_trans.opb==0;
 									end
 								end
 							end
 							repeat(1)@(vif.ref_model_cb);
-							$display("-----------------------Reference model @time = %0t------------------------------------------",$time);
+							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
 							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
 							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 						end		// Arithmetic opeation ends
@@ -172,7 +202,36 @@ class reference_model;
 							begin
 								if(ref_trans.inp_valid == 2'b00)
 									ref2scb_trans.err = 1'b1;
-								else if(ref_trans.inp_valid != 2'b11) 
+								else if(ref_trans.inp_valid == 2'b11) 
+								begin
+										case(ref_trans.cmd)
+											4'd0:	//AND
+												ref2scb_trans.res = {1'b0,ref_trans.opa & ref_trans.opb};
+											4'd1:	// NAND
+												ref2scb_trans.res = {1'b0,~(ref_trans.opa & ref_trans.opb)};
+											4'd2:	// OR
+												ref2scb_trans.res = {1'b0,ref_trans.opa | ref_trans.opb};
+											4'd3:	// NOR
+												ref2scb_trans.res = {1'b0,~(ref_trans.opa | ref_trans.opb)};
+											4'd4:	// XOR
+												ref2scb_trans.res = {1'b0,ref_trans.opa ^ ref_trans.opb};
+											4'd5:	// XNOR
+												ref2scb_trans.res = {1'b0,~(ref_trans.opa ^ ref_trans.opb)};
+											4'd12:	// ROL_A_B
+											begin
+												SH_AMT = ref_trans.opb;
+												ref2scb_trans.res = 16'h00FF & ({1'b0,(ref_trans.opa << SH_AMT | ref_trans.opa >> (`WIDTH - SH_AMT))});
+												ref2scb_trans.err = |ref_trans.opb[`WIDTH - 1 : POW_2_N +1];
+											end
+											4'd13:	// ROR_A_B
+											begin
+												SH_AMT = ref_trans.opb;
+												ref2scb_trans.res = 16'h00FF & ({1'b0,ref_trans.opa << (`WIDTH- SH_AMT) | ref_trans.opa >> SH_AMT});
+												ref2scb_trans.err = |ref_trans.opb[`WIDTH - 1 : POW_2_N +1];
+											end
+										endcase
+								end
+								else
 								begin
 									for(int i = 0; i < 16; i++ ) 
 									begin
@@ -186,17 +245,17 @@ class reference_model;
 									begin
 										case(ref_trans.cmd)
 											4'd0:	//AND
-												ref2scb_trans.res = ref_trans.opa & ref_trans.opb;
+												ref2scb_trans.res = {1'b0,ref_trans.opa & ref_trans.opb};
 											4'd1:	// NAND
-												ref2scb_trans.res = ~(ref_trans.opa & ref_trans.opb);
+												ref2scb_trans.res = {1'b0,~(ref_trans.opa & ref_trans.opb)};
 											4'd2:	// OR
-												ref2scb_trans.res = ref_trans.opa | ref_trans.opb;
+												ref2scb_trans.res = {1'b0,ref_trans.opa | ref_trans.opb};
 											4'd3:	// NOR
-												ref2scb_trans.res = ~(ref_trans.opa | ref_trans.opb);
+												ref2scb_trans.res = {1'b0,~(ref_trans.opa | ref_trans.opb)};
 											4'd4:	// XOR
-												ref2scb_trans.res = ref_trans.opa ^ ref_trans.opb;
+												ref2scb_trans.res = {1'b0,ref_trans.opa ^ ref_trans.opb};
 											4'd5:	// XNOR
-												ref2scb_trans.res = ~(ref_trans.opa ^ ref_trans.opb);
+												ref2scb_trans.res = {1'b0,~(ref_trans.opa ^ ref_trans.opb)};
 											4'd12:	// ROL_A_B
 											begin
 												SH_AMT = ref_trans.opb;
@@ -220,7 +279,7 @@ class reference_model;
 								else
 								begin
 									if(ref_trans.cmd == 6)		// NOT_A
-										ref2scb_trans.res = ~(ref_trans.opa);
+										ref2scb_trans.res = {1'b0,~(ref_trans.opa)};
 									else if(ref2scb_trans.cmd == 8)		// SHR1_A
 										ref2scb_trans.res = ref_trans.opa >> 1;
 									else		// SHL1_A
@@ -235,7 +294,7 @@ class reference_model;
 								else
 								begin
 									if(ref_trans.cmd == 7)		// NOT_B
-										ref2scb_trans.res = ~(ref_trans.opb);
+										ref2scb_trans.res = {1'b0,~(ref_trans.opb)};
 									else if(ref_trans.cmd == 10)		// SHR1_B
 										ref2scb_trans.res = ref_trans.opb >> 1;
 									else		// SHL1_B
@@ -243,9 +302,9 @@ class reference_model;
 								end
 							end
 							repeat(1)@(vif.ref_model_cb);
-							$display("-----------------------Reference model @time = %0t------------------------------------------",$time);
-							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
-							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
+							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
+							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%b | opb=%b | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
+							$display("@time=%0t | err=%b | res=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 						end		// logical opeation ends
 					end
 					else
@@ -262,6 +321,7 @@ class reference_model;
 				end
 				temp_trans = new ref2scb_trans; 
 			end
+			ref2scb_mbx.put(ref2scb_trans);
 		end
 	endtask
 endclass

@@ -1,7 +1,6 @@
 # vsim -c top 
-# Start time: 00:57:05 on Jul 28,2025
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: top.sv(34): (vopt-2241) Connection width does not match width of port 'RES'. The port definition is at: alu_design.v(10).
+# Start time: 20:03:32 on Jul 28,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
 # //
@@ -20,23 +19,208 @@
 # Loading work.top_sv_unit(fast)
 # Loading work.top(fast)
 # Loading work.interfs(fast)
-# @time = 0 Randomized: inp_valid = 2 | mode = 1 | cmd = 6 | ce = 1 | opa =11 | opb = 20 | cin= 1
-# @time = 0 Randomized: inp_valid = 2 | mode = 0 | cmd = 3 | ce = 1 | opa =104 | opb = 117 | cin= 1
-# --------------------------------Driver @ time = 30 -----------------------------------------------
-# ce= 1 | inp_valid = 2 | mode = 1 | cmd = 6 | opa = 11 | opb = 20 | cin = 1
-# --------------------------------Driver @ time = 70 -----------------------------------------------
-# ce= 1 | inp_valid = 2 | mode = 0 | cmd = 3 | opa = 104 | opb = 117 | cin = 1
-# --------------------------------Monitor @time = 70----------------------------------------------------
-#  res= 21 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
-# --------------------------------Monitor @time = 70----------------------------------------------------
-#  res= 21 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
-# -----------------------Reference model @time = 70------------------------------------------
-# @time=70 | inp_valid=10 | mode=1 | cmd=6 | ce=1 | opa=11 | opb=20 | cin=1
-# @time=70 | err=0 | res=21 | oflow=0 | cout=0 | g=0 | l=0 | e=0
-# -----------------------Reference model @time = 410------------------------------------------
-# @time=410 | inp_valid=10 | mode=0 | cmd=3 | ce=1 | opa=104 | opb=117 | cin=1
-# @time=410 | err=0 | res=386 | oflow=0 | cout=0 | g=0 | l=0 | e=0
-# Break key hit
-# Simulation stop requested.
-# End time: 00:57:09 on Jul 28,2025, Elapsed time: 0:00:04
-# Errors: 0, Warnings: 1
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 1 | ce = 1 | opa =227 | opb = 197 | cin= 1
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 3 | ce = 1 | opa =215 | opb = 65 | cin= 0
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 2 | ce = 1 | opa =247 | opb = 133 | cin= 1
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 1 | ce = 1 | opa =175 | opb = 136 | cin= 0
+# @time = 0 Randomized: inp_valid = 11 | mode = 0 | cmd = 1 | ce = 1 | opa =186 | opb = 107 | cin= 0
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 9 | ce = 1 | opa =93 | opb = 231 | cin= 1
+# @time = 0 Randomized: inp_valid = 11 | mode = 0 | cmd = 3 | ce = 1 | opa =116 | opb = 31 | cin= 1
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 9 | ce = 1 | opa =172 | opb = 7 | cin= 0
+# @time = 0 Randomized: inp_valid = 11 | mode = 0 | cmd = 10 | ce = 1 | opa =188 | opb = 182 | cin= 0
+# @time = 0 Randomized: inp_valid = 11 | mode = 1 | cmd = 2 | ce = 1 | opa =187 | opb = 106 | cin= 0
+# time = 30 In design: MODE=x | CMD=xxxx | OPA=x | OPB=x | CIN=x
+# ----------------------------------------------------Driver @ time = 70----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 1 | opa = 227 | opb = 197 | cin = 1
+# ----------------------------------------------------Monitor @time = 90----------------------------------------------------
+#  res= 30 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 90-----------------------------------------------
+# @time=90 | inp_valid=11 | mode=1 | cmd=1 | ce=1 | opa=227 | opb=197 | cin=1
+# @time=90 | err=0 | res=30 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=90---------------------------------------------------------
+# In scoreboard @time = 90 from Monitor: 
+#  res=30 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 90 from Reference: 
+#  res=30 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=90 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=30 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=90 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=30 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test passed = 1
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 130----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 3 | opa = 215 | opb = 65 | cin = 0
+# ----------------------------------------------------Monitor @time = 150----------------------------------------------------
+#  res= 150 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 150-----------------------------------------------
+# @time=150 | inp_valid=11 | mode=1 | cmd=3 | ce=1 | opa=215 | opb=65 | cin=0
+# @time=150 | err=0 | res=150 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=150---------------------------------------------------------
+# In scoreboard @time = 150 from Monitor: 
+#  res=150 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 150 from Reference: 
+#  res=150 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=150 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=150 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=150 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=150 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test passed = 2
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 190----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 2 | opa = 247 | opb = 133 | cin = 1
+# ----------------------------------------------------Monitor @time = 210----------------------------------------------------
+#  res= 381 | err = 0 | oflow = 0 | cout = 1 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 210-----------------------------------------------
+# @time=210 | inp_valid=11 | mode=1 | cmd=2 | ce=1 | opa=247 | opb=133 | cin=1
+# @time=210 | err=0 | res=381 | oflow=0 | cout=1 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=210---------------------------------------------------------
+# In scoreboard @time = 210 from Monitor: 
+#  res=381 |err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0
+# In scoreboard @time = 210 from Reference: 
+#  res=381 |err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=210 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=381 | err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=210 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=381 | err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0 
+# Test passed = 3
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 250----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 1 | opa = 175 | opb = 136 | cin = 0
+# ----------------------------------------------------Monitor @time = 270----------------------------------------------------
+#  res= 39 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 270-----------------------------------------------
+# @time=270 | inp_valid=11 | mode=1 | cmd=1 | ce=1 | opa=175 | opb=136 | cin=0
+# @time=270 | err=0 | res=39 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=270---------------------------------------------------------
+# In scoreboard @time = 270 from Monitor: 
+#  res=39 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 270 from Reference: 
+#  res=39 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=270 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=39 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=270 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=39 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test passed = 4
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 310----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 0 | cmd = 1 | opa = 186 | opb = 107 | cin = 0
+# ----------------------------------------------------Monitor @time = 330----------------------------------------------------
+#  res= 213 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 330-----------------------------------------------
+# @time=330 | inp_valid=11 | mode=0 | cmd=1 | ce=1 | opa=10111010 | opb=01101011 | cin=0
+# @time=330 | err=0 | res=011010101 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=330---------------------------------------------------------
+# In scoreboard @time = 330 from Monitor: 
+#  res=213 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 330 from Reference: 
+#  res=213 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=330 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=213 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=330 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=213 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test passed = 5
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 370----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 9 | opa = 93 | opb = 231 | cin = 1
+# ----------------------------------------------------Monitor @time = 390----------------------------------------------------
+#  res= 0 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 390-----------------------------------------------
+# @time=390 | inp_valid=11 | mode=1 | cmd=9 | ce=1 | opa=93 | opb=231 | cin=1
+# @time=390 | err=0 | res=304 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=390---------------------------------------------------------
+# In scoreboard @time = 390 from Monitor: 
+#  res=0 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 390 from Reference: 
+#  res=304 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=390 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=304 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=390 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=0 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test failed = 1
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 430----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 0 | cmd = 3 | opa = 116 | opb = 31 | cin = 1
+# ----------------------------------------------------Monitor @time = 450----------------------------------------------------
+#  res= 128 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 450-----------------------------------------------
+# @time=450 | inp_valid=11 | mode=0 | cmd=3 | ce=1 | opa=01110100 | opb=00011111 | cin=1
+# @time=450 | err=0 | res=010000000 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=450---------------------------------------------------------
+# In scoreboard @time = 450 from Monitor: 
+#  res=128 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 450 from Reference: 
+#  res=128 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=450 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=128 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=450 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=128 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test passed = 6
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 490----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 9 | opa = 172 | opb = 7 | cin = 0
+# ----------------------------------------------------Monitor @time = 510----------------------------------------------------
+#  res= 304 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 510-----------------------------------------------
+# @time=510 | inp_valid=11 | mode=1 | cmd=9 | ce=1 | opa=172 | opb=7 | cin=0
+# @time=510 | err=0 | res=360 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=510---------------------------------------------------------
+# In scoreboard @time = 510 from Monitor: 
+#  res=304 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 510 from Reference: 
+#  res=360 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=510 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=360 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=510 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=304 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test failed = 2
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 550----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 0 | cmd = 10 | opa = 188 | opb = 182 | cin = 0
+# ----------------------------------------------------Monitor @time = 570----------------------------------------------------
+#  res= 108 | err = 0 | oflow = 0 | cout = 0 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 570-----------------------------------------------
+# @time=570 | inp_valid=11 | mode=0 | cmd=10 | ce=1 | opa=10111100 | opb=10110110 | cin=0
+# @time=570 | err=0 | res=001011011 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=570---------------------------------------------------------
+# In scoreboard @time = 570 from Monitor: 
+#  res=108 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# In scoreboard @time = 570 from Reference: 
+#  res=91 |err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=570 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=91 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=570 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=108 | err=0 | oflow=0 | cout=0 | g=0 | l=0 | e=0 
+# Test failed = 3
+############################################################################################################################
+# ----------------------------------------------------Driver @ time = 610----------------------------------------------------
+# ce= 1 | inp_valid = 11 | mode = 1 | cmd = 2 | opa = 187 | opb = 106 | cin = 0
+# ----------------------------------------------------Monitor @time = 630----------------------------------------------------
+#  res= 293 | err = 0 | oflow = 0 | cout = 1 | g = 0 | l = 0 | e = 0
+# ----------------------------------------------Reference model @time = 630-----------------------------------------------
+# @time=630 | inp_valid=11 | mode=1 | cmd=2 | ce=1 | opa=187 | opb=106 | cin=0
+# @time=630 | err=0 | res=293 | oflow=0 | cout=1 | g=0 | l=0 | e=0
+# ----------------------------------------------Scoreboard @time=630---------------------------------------------------------
+# In scoreboard @time = 630 from Monitor: 
+#  res=293 |err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0
+# In scoreboard @time = 630 from Reference: 
+#  res=293 |err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0
+# ------------------------------------Report------------------------------------
+# From Reference:
+# time=630 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=293 | err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0 
+# From Monitor:
+# time=630 | ce=1 | mode=0 | cmd=0 | inp_valid=00 | opa=0 | opb=0 | cin=0 | res=293 | err=0 | oflow=0 | cout=1 | g=0 | l=0 | e=0 
+# Test passed = 7
+############################################################################################################################
+# ** Note: $finish    : top.sv(49)
+#    Time: 630 ns  Iteration: 4  Instance: /top
+# End time: 20:03:36 on Jul 28,2025, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 0
