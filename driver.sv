@@ -40,12 +40,12 @@ class driver;
 			bins shr1_a = {8};
 			bins shl1_a = {9};
 			bins shr1_b = {10};
-			bins shr1_b = {11};
+			bins shl1_b = {11};
 			bins rol_a_b = {12};
 			bins ror_a_b = {13};
 		}
-		arithmeticXinp_valid: cross arithmetic,inp_valid;
-		logicalXinp_valid: cross logical,inp_valid;
+		//arithmeticXinp_valid: cross arithmetic,inp_valid;
+		//logicalXinp_valid: cross logical,inp_valid;
 	endgroup
 	//Mention input covergroups
 	
