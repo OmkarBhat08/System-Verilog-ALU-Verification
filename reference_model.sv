@@ -22,6 +22,7 @@ class reference_model;
 
 	task run();
 		transaction temp_trans;
+		transaction temp1_trans;
 	 	temp_trans	= new();
 		//repeat(3) @(vif.ref_model_cb);
 		for(int i=0; i< `trans_number;i=i+1)
@@ -79,7 +80,7 @@ class reference_model;
 											4'd3:	// SUB_CIN
 											begin
 												ref2scb_trans.res = (ref_trans.opa - ref_trans.opb) - ref_trans.cin;
-												ref2scb_trans.oflow = ((ref_trans.opa < ref_trans.opb) || ((ref_trans.opa == ref_trans.opa) && (ref_trans.cin != 0)));
+												ref2scb_trans.oflow = ref_trans.opa < ref_trans.opb || ( ref_trans.opa == ref_trans.opb && ref_trans.cin);
 											end
 											4'd8:	// CMP
 											begin
@@ -127,7 +128,7 @@ class reference_model;
 											4'd3:	// SUB_CIN
 											begin
 												ref2scb_trans.res = (ref_trans.opa - ref_trans.opb) - ref_trans.cin;
-												ref2scb_trans.oflow = ((ref_trans.opa < ref_trans.opb) || ((ref_trans.opa == ref_trans.opa) && (ref_trans.cin != 0)));
+												ref2scb_trans.oflow = ref_trans.opa < ref_trans.opb || ( ref_trans.opa == ref_trans.opb && ref_trans.cin);
 											end
 											4'd8:	// CMP
 											begin
@@ -139,9 +140,15 @@ class reference_model;
         	            		{ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e} = 3'bz1z;
 											end	
 											4'd9:	//Increment and multiply
+											begin
+												repeat(1) @ (vif.ref_model_cb);
 												ref2scb_trans.res = (ref_trans.opa + 1) * (ref_trans.opb+1);
+											end
 											4'd10:	//Shift and multiply
+											begin
+												repeat(1) @ (vif.ref_model_cb);
 												ref2scb_trans.res = (ref_trans.opa << 1) * ref_trans.opb;
+											end
 										endcase
 									end
 								end
@@ -184,9 +191,6 @@ class reference_model;
 								end
 							end
 							repeat(1)@(vif.ref_model_cb);
-							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
-							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
-							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
@@ -302,9 +306,6 @@ class reference_model;
 								end
 							end
 							repeat(1)@(vif.ref_model_cb);
-							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
-							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%b | opb=%b | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
-							$display("@time=%0t | err=%b | res=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 						end		// logical opeation ends
 					end
 					else
@@ -321,7 +322,18 @@ class reference_model;
 				end
 				temp_trans = new ref2scb_trans; 
 			end
-			ref2scb_mbx.put(ref2scb_trans);
+			
+			if(((ref_trans.cmd ==9) || (ref_trans.cmd ==10)) && (ref_trans.mode ==1) && (ref_trans.inp_valid == 3))
+			begin
+				temp1_trans = new ref2scb_trans; 
+				repeat(1)@(vif.ref_model_cb);
+				ref2scb_mbx.put(temp1_trans);
+			end
+			else
+				ref2scb_mbx.put(ref2scb_trans);
+				$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
+				$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
+				$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 		end
 	endtask
 endclass
