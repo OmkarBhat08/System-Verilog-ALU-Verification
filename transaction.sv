@@ -34,7 +34,6 @@ class transaction;		// Base class can be used for coverage as well
 																	cmd inside {[0:13]};
 															}
 													 }
-
 	constraint cmd_in_range0 {if((mode == 0) && (inp_valid == 1))
 															cmd inside {6,8,9};
 														else
@@ -67,8 +66,8 @@ endclass
 
 class transaction1 extends transaction;	// Without any wait
 
-	constraint inp_valid_rand {inp_valid == 3;}
 	constraint ce_make_1 {ce ==1;}
+
 	constraint cmd_in_range1 {if((mode == 1) && (inp_valid == 1))
 															cmd inside {[4:5]};
 														else
@@ -79,7 +78,6 @@ class transaction1 extends transaction;	// Without any wait
 																	cmd inside {[0:10]};
 															}
 													 }
-
 	constraint cmd_in_range0 {if((mode == 0) && (inp_valid == 1))
 															cmd inside {6,8,9};
 														else

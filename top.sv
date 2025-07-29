@@ -40,12 +40,12 @@ module top();
 	);
 
 	test tb = new(intf.DRV, intf.MON, intf.REF);
-	//test1 tb1 = new(intf.DRV, intf.MON, intf.REF);
+	test1 tb1 = new(intf.DRV, intf.MON, intf.REF);
 	
 	initial
 	begin
-		tb.run();
-		//tb1.run();
+		//tb.run();
+		tb1.run();
 		$finish();
 	end
 endmodule

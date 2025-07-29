@@ -190,6 +190,9 @@ class reference_model;
 									end
 								end
 							end
+							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
+							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
+							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 							repeat(1)@(vif.ref_model_cb);
 						end		// Arithmetic opeation ends
 						else	//logical operations
@@ -309,6 +312,9 @@ class reference_model;
 										ref2scb_trans.res = {1'b0,ref_trans.opb << 1};
 								end
 							end
+							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
+							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%b | opb=%b | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
+							$display("@time=%0t | err=%b | res=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
 							repeat(1)@(vif.ref_model_cb);
 						end		// logical opeation ends
 					end
@@ -336,17 +342,7 @@ class reference_model;
 			else
 				ref2scb_mbx.put(ref2scb_trans);
 			
-				$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
-				if(ref_trans.mode)
-				begin
-				$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
-				$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
-				end
-			else
-				begin
-				$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%b | opb=%b | cin=%b",$time, ref_trans.inp_valid, ref_trans.mode,ref_trans.cmd,ref_trans.ce,ref_trans.opa,ref_trans.opb,ref_trans.cin);
-				$display("@time=%0t | err=%b | res=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref2scb_trans.err,ref2scb_trans.res,ref2scb_trans.oflow,ref2scb_trans.cout,ref2scb_trans.g,ref2scb_trans.l,ref2scb_trans.e);
-				end
+
 		end
 	endtask
 endclass

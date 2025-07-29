@@ -29,10 +29,8 @@ module alu #(parameter DW = 8, CW = 4)(INP_VALID,OPA,OPB,CIN,CLK,RST,CMD,CE,MODE
         wait_counter<=0;
         oprd1_valid<=0;
         oprd2_valid<=0;
-				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
       end
       else if (INP_VALID==2'b01)  begin    
-				$display("time = %0t In design: MODE=%0d | CMD=%b | OPA=%0d | OPB=%0d | CIN=%d",$time,MODE,CMD,OPA,OPB,CIN);
         oprd1<=OPA;
         CMD_tmp<=CMD;
         oprd1_valid<=1;
