@@ -1,0 +1,18 @@
+var g_data = {
+a8:{
+scopes:[{s:'6',b:'0',val:'top'},{link:'z.htm?f=0&s=8',val:'intf'}]
+,assertions:[{dummy:0},{cr:'m',c:'F',z:'assert__latch_outputs',fc:'Rr',pc:'Gr',h0:'9347',h1:'3140',h2:'30156',h3:'17669',h4:'0',h5:'0',h6:'2'}
+,{cr:'m',c:'F',z:'assert__invalid_inputs',fc:'Rr',pc:'Gr',h0:'6284',h1:'37',h2:'30156',h3:'23835',h4:'0',h5:'0',h6:'1'}
+,{cr:'m',c:'F',z:'assert__reset_assert',fc:'Rr',pc:'Gr',h0:'13808',h1:'1214',h2:'30156',h3:'15133',h4:'0',h5:'1',h6:'2'}
+],
+},
+a4:{
+scopes:[{link:'z.htm?f=0&s=4',val:'work.interfs'}]
+,assertions:[{dummy:0},{cr:'m',c:'F',z:'assert__latch_outputs',fc:'Rr',pc:'Gr',h0:'9347',h1:'3140',h2:'30156',h3:'17669',h4:'0',h5:'0',h6:'2'}
+,{cr:'m',c:'F',z:'assert__invalid_inputs',fc:'Rr',pc:'Gr',h0:'6284',h1:'37',h2:'30156',h3:'23835',h4:'0',h5:'0',h6:'1'}
+,{cr:'m',c:'F',z:'assert__reset_assert',fc:'Rr',pc:'Gr',h0:'13808',h1:'1214',h2:'30156',h3:'15133',h4:'0',h5:'1',h6:'2'}
+],
+},
+dummyEnd:0
+};
+processAssertionsData(g_data,1);

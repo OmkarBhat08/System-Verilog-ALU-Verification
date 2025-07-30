@@ -1,0 +1,12 @@
+var g_data = {'dummy':null,
+'3':'alu.v',
+'6':'driver.sv',
+'10':'environment.sv',
+'5':'generator.sv',
+'1':'interfs.sv',
+'7':'monitor.sv',
+'8':'reference_model.sv',
+'9':'scoreboard.sv',
+'11':'test.sv',
+'2':'top.sv',
+'4':'transaction.sv'};
