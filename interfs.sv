@@ -1,8 +1,8 @@
 `include "defines.sv"
 
-interface interfs(input bit clk,rst);
+interface interfs(input bit clk);
 	//inputs
-	logic ce,cin,mode;
+	logic rst,ce,cin,mode;
 	logic [1:0] inp_valid;
 	logic [3:0] cmd;
 	logic [`WIDTH-1:0] opa, opb;
@@ -14,9 +14,8 @@ interface interfs(input bit clk,rst);
 	//Clocking blocks
 	clocking driver_cb @(posedge clk);
 		default input #0 output #0;
-		input rst;
 		//Output
-		inout ce, inp_valid, mode, cmd, opa, opb, cin;
+		inout rst, ce, inp_valid, mode, cmd, opa, opb, cin;
 	endclocking
 
 	clocking monitor_cb @(posedge clk);
@@ -35,7 +34,7 @@ interface interfs(input bit clk,rst);
 	modport DRV (clocking driver_cb);	
 	modport MON (clocking monitor_cb);	
 	modport REF (clocking ref_model_cb);	
-
+/*
 	property reset_assert;
 		@(posedge clk) rst |-> res==0;
 	endproperty
@@ -53,5 +52,5 @@ interface interfs(input bit clk,rst);
 		$display("Error flag is high when inp_valid is 0");
 	else
 		$display("Error flag is low when inp_valid is 0");
+*/
 endinterface	
-

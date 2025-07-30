@@ -1,7 +1,7 @@
 `include "defines.sv"
 class transaction;		// Base class can be used for coverage as well
 	//inputs
-	
+	rand bit rst;	
 	rand bit ce;
 	rand bit cin,mode;
 	rand bit [1:0] inp_valid;
@@ -11,6 +11,8 @@ class transaction;		// Base class can be used for coverage as well
 	bit err, oflow, cout, g,l,e;
 	bit [`WIDTH:0] res;
 
+	constraint rst_deassert {rst inside {0,1};}
+	constraint solve_rst_first {solve rst before ce;}
 	constraint solve_mode_before_cmd {solve mode before cmd;}
 	constraint solve_inp_valid_before_cmd {solve inp_valid before cmd;}
 	constraint solve_ce_before_mode{solve ce before mode;}
@@ -50,6 +52,7 @@ class transaction;		// Base class can be used for coverage as well
 	//Blueprint method
 	virtual function transaction copy();
 		copy = new();
+		copy.rst = this.rst;
 		copy.ce = this.ce;
 		copy.cin = this.cin;
 		copy.mode = this.mode;
@@ -60,14 +63,13 @@ class transaction;		// Base class can be used for coverage as well
 		return copy;
 	endfunction
 	function void disp();
-		$display("time=%0t | ce=%b | mode=%0d | cmd=%0d | inp_valid=%b | opa=%0d | opb=%0d | cin=%b | res=%0d | err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b ",$time,ce,mode,cmd,inp_valid,opa,opb,cin,res,err,oflow,cout,g,l,e);	
+		$display("time=%0t | rst=%b | ce=%b | mode=%0d | cmd=%0d | inp_valid=%b | opa=%0d | opb=%0d | cin=%b | res=%0d | err=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b ",$time,rst,ce,mode,cmd,inp_valid,opa,opb,cin,res,err,oflow,cout,g,l,e);	
 	endfunction
 endclass
 
 class transaction1 extends transaction;	// Normal Without any wait: when CE = 1
-
+	constraint rst_deassert{rst==0;}
 	constraint ce_make_1 {ce == 1;}
-
 	constraint cmd_in_range1 {if((mode == 1) && (inp_valid == 1))
 															cmd inside {[4:5]};
 														else
@@ -92,6 +94,7 @@ class transaction1 extends transaction;	// Normal Without any wait: when CE = 1
 	virtual function transaction copy();
 		transaction1 copy1;
 		copy1 = new();
+		copy1.rst = this.rst;
 		copy1.ce = this.ce;
 		copy1.cin = this.cin;
 		copy1.mode = this.mode;
@@ -104,11 +107,13 @@ class transaction1 extends transaction;	// Normal Without any wait: when CE = 1
 endclass
 
 class transaction2 extends transaction;	// Latch: When CE = 0
+	constraint rst_deassert{rst==0;}
 	constraint ce_make_1 {ce == 0;}
 
 	virtual function transaction copy();
 		transaction2 copy2;
 		copy2 = new();
+		copy2.rst = this.rst;
 		copy2.ce = this.ce;
 		copy2.cin = this.cin;
 		copy2.mode = this.mode;
@@ -121,6 +126,7 @@ class transaction2 extends transaction;	// Latch: When CE = 0
 endclass
 
 class transaction3 extends transaction;	// Error: When inp_valid drives for error
+	constraint rst_deassert{rst==0;}
 
 	constraint inp_valid_rand {inp_valid inside {[0:2]};}
 
@@ -146,6 +152,7 @@ class transaction3 extends transaction;	// Error: When inp_valid drives for erro
 	virtual function transaction copy();
 		transaction3 copy3;
 		copy3 = new();
+		copy3.rst = this.rst;
 		copy3.ce = this.ce;
 		copy3.cin = this.cin;
 		copy3.mode = this.mode;
@@ -158,6 +165,7 @@ class transaction3 extends transaction;	// Error: When inp_valid drives for erro
 endclass
 
 class transaction4 extends transaction;	// Arithmetic: mode = 0, ce = 1
+	constraint rst_deassert{rst==0;}
 	constraint ce_make_1 {ce == 1;}
 	constraint mode_rand {mode == 1;}
 	constraint inp_valid_rand {inp_valid == 3;}
@@ -165,6 +173,7 @@ class transaction4 extends transaction;	// Arithmetic: mode = 0, ce = 1
 	virtual function transaction copy();
 		transaction4 copy4;
 		copy4 = new();
+		copy4.rst = this.rst;
 		copy4.ce = this.ce;
 		copy4.cin = this.cin;
 		copy4.mode = this.mode;
@@ -177,6 +186,7 @@ class transaction4 extends transaction;	// Arithmetic: mode = 0, ce = 1
 endclass
 
 class transaction5 extends transaction;	// Logical: mode = 0, ce = 1
+	constraint rst_deassert{rst==0;}
 	constraint ce_make_1 {ce == 1;}
 	constraint mode_rand {mode == 0;}
 	constraint inp_valid_rand {inp_valid == 3;}
@@ -184,6 +194,7 @@ class transaction5 extends transaction;	// Logical: mode = 0, ce = 1
 	virtual function transaction copy();
 		transaction5 copy5;
 		copy5 = new();
+		copy5.rst = this.rst;
 		copy5.ce = this.ce;
 		copy5.cin = this.cin;
 		copy5.mode = this.mode;

@@ -24,6 +24,7 @@ class monitor;
 			begin
 			if(((vif.monitor_cb.cmd ==9) || (vif.monitor_cb.cmd ==10)) && (vif.monitor_cb.mode ==1) && (vif.monitor_cb.inp_valid == 3))
 				repeat(1) @(vif.monitor_cb);
+				mon_trans.rst = vif.monitor_cb.rst;
 				mon_trans.ce = vif.monitor_cb.ce;
 				mon_trans.inp_valid = vif.monitor_cb.inp_valid;
 				mon_trans.mode = vif.monitor_cb.mode;

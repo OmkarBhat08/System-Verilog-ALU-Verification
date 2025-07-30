@@ -32,8 +32,9 @@ class reference_model;
 
 			drv2ref_mbx.get(ref_trans);
 			begin
-				if(vif.ref_model_cb.rst)
+				if(ref_trans.rst)
 				begin
+					ref2scb_trans.rst = ref_trans.rst;
 					ref2scb_trans.inp_valid = ref_trans.inp_valid;
 					ref2scb_trans.mode = ref_trans.mode;
 					ref2scb_trans.cmd = ref_trans.cmd;
@@ -55,6 +56,7 @@ class reference_model;
 					begin
 						if(ref_trans.mode)		// Arithmetic operations
 						begin
+							ref2scb_trans.rst = ref_trans.rst;
 							ref2scb_trans.inp_valid = ref_trans.inp_valid;
 							ref2scb_trans.mode = ref_trans.mode;
 							ref2scb_trans.cmd = ref_trans.cmd;
@@ -211,6 +213,7 @@ class reference_model;
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
+							ref2scb_trans.rst = ref_trans.rst;
 							ref2scb_trans.inp_valid = ref_trans.inp_valid;
 							ref2scb_trans.mode = ref_trans.mode;
 							ref2scb_trans.cmd = ref_trans.cmd;

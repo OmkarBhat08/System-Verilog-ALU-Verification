@@ -66,25 +66,27 @@ class driver;
 			drv_trans = new();
 			gen2drv_mbx.get(drv_trans);
 
-			if(vif.driver_cb.rst)
+			if(drv_trans.rst)
 			begin
 				repeat(1) @(vif.driver_cb);
 				begin
+					vif.driver_cb.rst <= drv_trans.rst;	
+					vif.driver_cb.ce <= drv_trans.ce;	
 					vif.driver_cb.inp_valid <= drv_trans.inp_valid;	
 					vif.driver_cb.mode <= drv_trans.mode;	
 					vif.driver_cb.cmd <= drv_trans.cmd;	
 					vif.driver_cb.opa <= drv_trans.opa;	
 					vif.driver_cb.opb <= drv_trans.opb;	
 					vif.driver_cb.cin <= drv_trans.cin;	
-					vif.driver_cb.ce <= drv_trans.ce;	
-					repeat(1) @(vif.driver_cb);
-					$display("--------------------------------Driver during reset @ time = %0t---------------------------------\ninp_valid = %b | mode = %b | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
+					$display("--------------------------------Driver during reset @ time = %0t---------------------------------\nrst = %b |inp_valid = %b | mode = %b | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.rst,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
+					drv2ref_mbx.put(drv_trans);
 				end
 			end
 			else
 			begin
 				repeat(1) @(vif.driver_cb);
 				begin
+					vif.driver_cb.rst <= drv_trans.rst;	
 					vif.driver_cb.inp_valid <= drv_trans.inp_valid;	
 					vif.driver_cb.mode <= drv_trans.mode;	
 					vif.driver_cb.cmd <= drv_trans.cmd;	
@@ -93,18 +95,18 @@ class driver;
 					vif.driver_cb.cin <= drv_trans.cin;	
 					vif.driver_cb.ce <= drv_trans.ce;	
 					repeat(1) @(vif.driver_cb);
-					$display("----------------------------------------------------Driver @ time = %0t----------------------------------------------------\nce= %0d | inp_valid = %b | mode = %0d | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.ce,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
+					$display("----------------------------------------------------Driver @ time = %0t----------------------------------------------------\nrst = %b | ce= %0d | inp_valid = %b | mode = %0d | cmd = %0d | opa = %0d | opb = %0d | cin = %0d",$time,vif.driver_cb.rst,vif.driver_cb.ce,vif.driver_cb.inp_valid, vif.driver_cb.mode,vif.driver_cb.cmd,vif.driver_cb.opa,vif.driver_cb.opb,vif.driver_cb.cin);
 
 					drv2ref_mbx.put(drv_trans);
 
 					driver_cover.sample();
 					$display("Input Functional Coverage = %0d", driver_cover.get_coverage());
+				end
+			end
 			if(((vif.driver_cb.cmd ==9) || (vif.driver_cb.cmd ==10)) && (vif.driver_cb.mode ==1) && (vif.driver_cb.inp_valid == 3))
 				repeat(2) @(vif.driver_cb);
 			else
 				repeat(1) @(vif.driver_cb);
-				end
-			end
 		end
 	endtask
 endclass

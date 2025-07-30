@@ -2,27 +2,18 @@
 `include "interfs.sv"
 `include "alu.v"
 module top();
-	bit clk, rst;
+	bit clk;
 	
 	initial
 	begin
 		forever #10 clk =~clk;
 	end
 
-	initial
-	begin
-		@(posedge clk);
-			rst = 1'b1;
-		
-		@(posedge clk);
-			rst = 1'b0;
-	end
-
-	interfs intf(clk,rst);
+	interfs intf(clk);
 
 	alu DUT (
 		.CLK(clk),
-		.RST(rst),
+		.RST(intf.rst),
 		.INP_VALID(intf.inp_valid),
 		.MODE(intf.mode),
 		.CMD(intf.cmd),
@@ -48,8 +39,8 @@ module top();
 	
 	initial
 	begin
-		//tb.run();
-		tb1.run();
+		tb.run();
+		//tb1.run();
 		//tb2.run();
 		//tb3.run();
 		//tb4.run();
