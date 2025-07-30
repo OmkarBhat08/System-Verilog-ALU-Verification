@@ -44,8 +44,8 @@ module top();
 	
 	initial
 	begin
-		//tb.run();
-		tb1.run();
+		tb.run();
+		//tb1.run();
 		$finish();
 	end
 endmodule

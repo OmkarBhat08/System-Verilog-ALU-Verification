@@ -35,4 +35,22 @@ interface interfs(input bit clk,rst);
 	modport DRV (clocking driver_cb);	
 	modport MON (clocking monitor_cb);	
 	modport REF (clocking ref_model_cb);	
+	
+	property reset_assert;
+		@(posedge clk) rst |-> res==0;
+	endproperty
+
+	property invalid_inputs;
+		@(posedge clk) (inp_valid == 0) |-> err;
+	endproperty
+
+	assert property (reset_assert)
+		$display("\n\nResult cleared when reset asserted\n\n");
+	else
+		$display("\n\nResult not cleared when reset asserted\n\n");
+
+	assert property (invalid_inputs)
+		$display("Error flag is high when inp_valid is 0");
+	else
+		$error("Error flag is low when inp_valid is 0");
 endinterface	
