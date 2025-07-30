@@ -34,13 +34,20 @@ class reference_model;
 			begin
 				if(vif.ref_model_cb.rst)
 				begin
-					ref2scb_trans.res = {`WIDTH{1'bz}};
-					ref2scb_trans.oflow = 1'bz;
-					ref2scb_trans.cout = 1'bz;
-					ref2scb_trans.g = 1'bz;
-					ref2scb_trans.l = 1'bz;
-					ref2scb_trans.e = 1'bz;
-					ref2scb_trans.err = 1'bz;
+					ref2scb_trans.inp_valid = ref_trans.inp_valid;
+					ref2scb_trans.mode = ref_trans.mode;
+					ref2scb_trans.cmd = ref_trans.cmd;
+					ref2scb_trans.ce = ref_trans.ce;
+					ref2scb_trans.opa = ref_trans.opa;
+					ref2scb_trans.opb = ref_trans.opb;
+					ref2scb_trans.cin = ref_trans.cin;
+					ref2scb_trans.res = {`WIDTH{1'b0}};
+					ref2scb_trans.oflow = 1'b0;
+					ref2scb_trans.cout = 1'b0;
+					ref2scb_trans.g = 1'b0;
+					ref2scb_trans.l = 1'b0;
+					ref2scb_trans.e = 1'b0;
+					ref2scb_trans.err = 1'b0;
 				end
 				else
 				begin
@@ -48,6 +55,13 @@ class reference_model;
 					begin
 						if(ref_trans.mode)		// Arithmetic operations
 						begin
+							ref2scb_trans.inp_valid = ref_trans.inp_valid;
+							ref2scb_trans.mode = ref_trans.mode;
+							ref2scb_trans.cmd = ref_trans.cmd;
+							ref2scb_trans.ce = ref_trans.ce;
+							ref2scb_trans.opa = ref_trans.opa;
+							ref2scb_trans.opb = ref_trans.opb;
+							ref2scb_trans.cin = ref_trans.cin;
 							ref2scb_trans.res = {`WIDTH{1'b0}};
 							ref2scb_trans.oflow = 1'b0;
 							ref2scb_trans.cout = 1'b0;
@@ -197,7 +211,13 @@ class reference_model;
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
-
+							ref2scb_trans.inp_valid = ref_trans.inp_valid;
+							ref2scb_trans.mode = ref_trans.mode;
+							ref2scb_trans.cmd = ref_trans.cmd;
+							ref2scb_trans.ce = ref_trans.ce;
+							ref2scb_trans.opa = ref_trans.opa;
+							ref2scb_trans.opb = ref_trans.opb;
+							ref2scb_trans.cin = ref_trans.cin;
 							ref2scb_trans.res = {`WIDTH{1'b0}};
 							ref2scb_trans.oflow = 1'b0;
 							ref2scb_trans.cout = 1'b0;

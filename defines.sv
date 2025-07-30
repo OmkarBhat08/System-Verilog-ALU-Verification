@@ -1,3 +1,3 @@
 `define WIDTH 8
-`define trans_number 200	// For coverage
-//`define trans_number 5
+//`define trans_number 600	// For coverage
+`define trans_number 20

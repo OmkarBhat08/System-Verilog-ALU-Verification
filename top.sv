@@ -41,11 +41,19 @@ module top();
 
 	test tb = new(intf.DRV, intf.MON, intf.REF);
 	test1 tb1 = new(intf.DRV, intf.MON, intf.REF);
+	test2 tb2 = new(intf.DRV, intf.MON, intf.REF);
+	test3 tb3 = new(intf.DRV, intf.MON, intf.REF);
+	test4 tb4 = new(intf.DRV, intf.MON, intf.REF);
+	test5 tb5 = new(intf.DRV, intf.MON, intf.REF);
 	
 	initial
 	begin
-		tb.run();
-		//tb1.run();
+		//tb.run();
+		tb1.run();
+		//tb2.run();
+		//tb3.run();
+		//tb4.run();
+		//tb5.run();
 		$finish();
 	end
 endmodule

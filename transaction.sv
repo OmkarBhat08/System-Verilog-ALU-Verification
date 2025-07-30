@@ -64,9 +64,9 @@ class transaction;		// Base class can be used for coverage as well
 	endfunction
 endclass
 
-class transaction1 extends transaction;	// Without any wait
+class transaction1 extends transaction;	// Normal Without any wait: when CE = 1
 
-	constraint ce_make_1 {ce ==1;}
+	constraint ce_make_1 {ce == 1;}
 
 	constraint cmd_in_range1 {if((mode == 1) && (inp_valid == 1))
 															cmd inside {[4:5]};
@@ -90,7 +90,6 @@ class transaction1 extends transaction;	// Without any wait
 													 }
 
 	virtual function transaction copy();
-		//restrict the modes for both inputs
 		transaction1 copy1;
 		copy1 = new();
 		copy1.ce = this.ce;
@@ -101,5 +100,97 @@ class transaction1 extends transaction;	// Without any wait
 		copy1.opa = this.opa;
 		copy1.opb = this.opb;
 		return copy1;
+	endfunction
+endclass
+
+class transaction2 extends transaction;	// Latch: When CE = 0
+	constraint ce_make_1 {ce == 0;}
+
+	virtual function transaction copy();
+		transaction2 copy2;
+		copy2 = new();
+		copy2.ce = this.ce;
+		copy2.cin = this.cin;
+		copy2.mode = this.mode;
+		copy2.inp_valid = this.inp_valid;
+		copy2.cmd = this.cmd;
+		copy2.opa = this.opa;
+		copy2.opb = this.opb;
+		return copy2;
+	endfunction
+endclass
+
+class transaction3 extends transaction;	// Error: When inp_valid drives for error
+
+	constraint inp_valid_rand {inp_valid inside {[0:2]};}
+
+	constraint cmd_in_range1 {if((mode == 1) && (inp_valid == 1))
+															cmd inside {[0:3],[6:10]};
+														else
+															{
+																if((mode == 1) && (inp_valid == 2))
+																	cmd inside {[0:5],[8:10]};
+															}
+													 }
+	constraint cmd_in_range0 {if((mode == 0) && (inp_valid == 1))
+															cmd inside {[0:5],[10:13]};
+														else
+														{
+															if((mode == 0) && (inp_valid == 2))
+																cmd inside {[0:6],[11:12]};
+															else
+																cmd inside {[0:13]};
+														}
+													 }
+
+	virtual function transaction copy();
+		transaction3 copy3;
+		copy3 = new();
+		copy3.ce = this.ce;
+		copy3.cin = this.cin;
+		copy3.mode = this.mode;
+		copy3.inp_valid = this.inp_valid;
+		copy3.cmd = this.cmd;
+		copy3.opa = this.opa;
+		copy3.opb = this.opb;
+		return copy3;
+	endfunction
+endclass
+
+class transaction4 extends transaction;	// Arithmetic: mode = 0, ce = 1
+	constraint ce_make_1 {ce == 1;}
+	constraint mode_rand {mode == 1;}
+	constraint inp_valid_rand {inp_valid == 3;}
+
+	virtual function transaction copy();
+		transaction4 copy4;
+		copy4 = new();
+		copy4.ce = this.ce;
+		copy4.cin = this.cin;
+		copy4.mode = this.mode;
+		copy4.inp_valid = this.inp_valid;
+		copy4.cmd = this.cmd;
+		copy4.opa = this.opa;
+		copy4.opb = this.opb;
+		return copy4;
+	endfunction
+endclass
+
+class transaction5 extends transaction;	// Logical: mode = 0, ce = 1
+	constraint ce_make_1 {ce == 1;}
+	constraint mode_rand {mode == 0;}
+	constraint inp_valid_rand {inp_valid == 3;}
+
+	virtual function transaction copy();
+		transaction5 copy5;
+		copy5 = new();
+		copy5.ce = this.ce;
+		copy5.cin = this.cin;
+		copy5.mode = this.mode;
+		copy5.inp_valid = this.inp_valid;
+		copy5.cmd = this.cmd;
+		copy5.opa = this.opa;
+		copy5.opb = this.opb;
+		return copy5;
 	endfunction
 endclass

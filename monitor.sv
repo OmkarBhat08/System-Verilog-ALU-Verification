@@ -24,7 +24,13 @@ class monitor;
 			begin
 			if(((vif.monitor_cb.cmd ==9) || (vif.monitor_cb.cmd ==10)) && (vif.monitor_cb.mode ==1) && (vif.monitor_cb.inp_valid == 3))
 				repeat(1) @(vif.monitor_cb);
-	
+				mon_trans.ce = vif.monitor_cb.ce;
+				mon_trans.inp_valid = vif.monitor_cb.inp_valid;
+				mon_trans.mode = vif.monitor_cb.mode;
+				mon_trans.cmd = vif.monitor_cb.cmd;
+				mon_trans.opa = vif.monitor_cb.opa;
+				mon_trans.opb = vif.monitor_cb.opb;
+				mon_trans.cin = vif.monitor_cb.cin;
 				mon_trans.res = vif.monitor_cb.res;
 				mon_trans.err = vif.monitor_cb.err;
 				mon_trans.oflow = vif.monitor_cb.oflow;
@@ -35,6 +41,7 @@ class monitor;
 				mon2scb_mbx.put(mon_trans);
 			end
 			$display("----------------------------------------------------Monitor @time = %0t----------------------------------------------------\n res= %0d | err = %0d | oflow = %0d | cout = %0d | g = %0d | l = %0d | e = %0d",$time,mon_trans.res,mon_trans.err, mon_trans.oflow, mon_trans.cout, mon_trans.g, mon_trans.l, mon_trans.e);
+				mon_trans.disp();
 
 			// Sample covergroup
 			// mon_cg.sample();
@@ -42,3 +49,5 @@ class monitor;
 		end	
 	endtask
 endclass
+
+
